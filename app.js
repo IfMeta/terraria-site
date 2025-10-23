@@ -7,40 +7,31 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // ===== VARIÁVEIS GLOBAIS =====
 const senhaAdmin = "admin123"; // senha de acesso à manutenção
 
-// ===== CADASTRAR USUÁRIO =====
-async function cadastrarUsuario(event) {
-  event.preventDefault();
-
-  const nome = document.getElementById("nome").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const telefone = document.getElementById("telefone").value.trim();
-  const endereco = document.getElementById("endereco").value.trim();
-  const senha = document.getElementById("senha").value.trim();
+// ===== EVENTOS LOGIN / CADASTRO =====
+document.getElementById("btnSignUp").addEventListener("click", async () => {
+  const nome = document.getElementById("nomeSignup").value.trim();
+  const email = document.getElementById("emailAuth").value.trim();
+  const senha = document.getElementById("senhaAuth").value.trim();
 
   if (!nome || !email || !senha) {
-    alert("Por favor, preencha nome, e-mail e senha!");
+    alert("Preencha todos os campos para cadastro!");
     return;
   }
 
   const { data, error } = await supabase
     .from("usuarios")
-    .insert([{ nome, email, telefone, endereco, senha }]);
+    .insert([{ nome, email, senha }]);
 
-  if (error) {
-    console.error(error);
-    alert("Erro ao cadastrar usuário!");
-  } else {
+  if (error) alert("Erro ao cadastrar: " + error.message);
+  else {
     alert("Cadastro realizado com sucesso!");
-    document.getElementById("formCadastro").reset();
+    document.getElementById("formAuth").reset();
   }
-}
+});
 
-// ===== LOGIN =====
-async function loginUsuario(event) {
-  event.preventDefault();
-
-  const email = document.getElementById("loginEmail").value.trim();
-  const senha = document.getElementById("loginSenha").value.trim();
+document.getElementById("btnSignIn").addEventListener("click", async () => {
+  const email = document.getElementById("emailAuth").value.trim();
+  const senha = document.getElementById("senhaAuth").value.trim();
 
   const { data, error } = await supabase
     .from("usuarios")
@@ -49,14 +40,13 @@ async function loginUsuario(event) {
     .eq("senha", senha)
     .single();
 
-  if (error || !data) {
-    alert("E-mail ou senha incorretos!");
-  } else {
+  if (error || !data) alert("E-mail ou senha incorretos!");
+  else {
     localStorage.setItem("usuarioLogado", JSON.stringify(data));
     alert("Login realizado com sucesso!");
     window.location.href = "comunidade.html";
   }
-}
+});
 
 // ===== VERIFICAR LOGIN =====
 function verificarLogin() {
@@ -64,6 +54,10 @@ function verificarLogin() {
   if (!usuario) {
     alert("Você precisa estar logado para acessar esta página!");
     window.location.href = "index.html";
+  } else {
+    document.getElementById("nomeUsuario").innerText = JSON.parse(usuario).nome;
+    document.getElementById("areaPrivada").style.display = "block";
+    document.getElementById("msgLogin").style.display = "none";
   }
 }
 
@@ -123,9 +117,8 @@ async function editarUsuario(id) {
     .update({ nome: novoNome, email: novoEmail })
     .eq("id", id);
 
-  if (error) {
-    alert("Erro ao editar usuário!");
-  } else {
+  if (error) alert("Erro ao editar usuário!");
+  else {
     alert("Usuário atualizado!");
     carregarUsuarios();
   }
@@ -136,9 +129,8 @@ async function excluirUsuario(id) {
   if (!confirm("Tem certeza que deseja excluir este usuário?")) return;
 
   const { error } = await supabase.from("usuarios").delete().eq("id", id);
-  if (error) {
-    alert("Erro ao excluir!");
-  } else {
+  if (error) alert("Erro ao excluir!");
+  else {
     alert("Usuário excluído!");
     carregarUsuarios();
   }

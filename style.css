@@ -1,30 +1,124 @@
+/* ===== GERAL ===== */
 body {
   font-family: 'Verdana', sans-serif;
-  background-color: #0d1b2a;
+  background-color: #0d1b2a; /* azul escuro tipo Terraria */
   color: #e0e1dd;
+  margin: 0;
+  padding: 0;
 }
 
+/* ===== HEADER / BANNER ===== */
 header {
   background-image: url('img/terraria-bg.jpg');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 2px 2px 4px #000;
 }
 
+header h1 {
+  font-size: 3rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+header p {
+  font-size: 1.2rem;
+}
+
+/* ===== NAVBAR ===== */
 .navbar-brand {
   font-family: 'Courier New', Courier, monospace;
   font-size: 1.5rem;
 }
 
+.navbar-nav .nav-link {
+  font-weight: bold;
+}
+
+/* ===== BOTOES ===== */
 .btn-success {
   background-color: #2b9348;
   border-color: #2b9348;
+  font-weight: bold;
 }
 
 .btn-outline-success {
   color: #2b9348;
   border-color: #2b9348;
+  font-weight: bold;
 }
 
+.btn-outline-light {
+  color: #e0e1dd;
+  border-color: #e0e1dd;
+}
+
+/* ===== MODAL ===== */
+.modal-content {
+  background-color: #1b2a38;
+  color: #e0e1dd;
+}
+
+.modal-header, .modal-footer {
+  border-color: #2b9348;
+}
+
+/* ===== FORMULÁRIOS ===== */
+input.form-control, textarea.form-control {
+  background-color: #0d1b2a;
+  color: #e0e1dd;
+  border: 1px solid #2b9348;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #a0a0a0;
+}
+
+/* ===== FOOTER ===== */
 footer {
   margin-top: 30px;
+  background-color: #2b9348;
+  color: #e0e1dd;
+}
+
+/* ===== CONTAINER / MAIN ===== */
+main.container {
+  padding: 40px 15px;
+}
+
+/* ===== TABELAS ===== */
+table {
+  background-color: #1b2a38;
+}
+
+table th, table td {
+  color: #e0e1dd;
+}
+
+table th {
+  background-color: #2b9348;
+}
+
+table tr:nth-child(even) {
+  background-color: #16202a;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+  header {
+    height: 300px;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  header p {
+    font-size: 1rem;
+  }
 }
