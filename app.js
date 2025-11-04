@@ -3,11 +3,11 @@ const SUPABASE_URL = "https://lbwixdunttzdrswgzqrq.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxid2l4ZHVudHR6ZHJzd2d6cXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjExNzg3NDAsImV4cCI6MjA3Njc1NDc0MH0.uSZh1Wlsc29vVPWKWe5zGXRPFlN69bYp3pECjeIoCNU";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ===== VARIÁVEIS GLOBAIS =====
-const senhaAdmin = "admin123"; // senha de acesso à manutenção
+// ===== VARIÁVEIS =====
+const senhaAdmin = "admin123"; // senha para acessar manutenção
 
-// ===== CADASTRAR =====
-document.getElementById("btnSignUp").addEventListener("click", async () => {
+// ===== CADASTRO =====
+document.getElementById("btnSignUp")?.addEventListener("click", async () => {
   const nome = document.getElementById("nomeSignup").value.trim();
   const telefone = document.getElementById("telefoneSignup").value.trim();
   const endereco = document.getElementById("enderecoSignup").value.trim();
@@ -15,31 +15,32 @@ document.getElementById("btnSignUp").addEventListener("click", async () => {
   const senha = document.getElementById("senhaAuth").value.trim();
 
   if (!nome || !telefone || !endereco || !email || !senha) {
-    alert("Preencha todos os campos para cadastro!");
+    alert("Preencha todos os campos!");
     return;
   }
 
+  // Inserir no Supabase
   const { data, error } = await supabase
     .from("usuarios")
-    .insert([{ nome, telefone, endereco, email, senha }]);
+    .insert([{ nome, telefone, endereco, email, senha }])
+    .select();
 
   if (error) {
     alert("Erro ao cadastrar: " + error.message);
   } else {
     alert("Cadastro realizado com sucesso!");
-    // salva o usuário no localStorage
     localStorage.setItem("usuarioLogado", JSON.stringify(data[0]));
     window.location.href = "comunidade.html";
   }
 });
 
 // ===== LOGIN =====
-document.getElementById("btnSignIn").addEventListener("click", async () => {
+document.getElementById("btnSignIn")?.addEventListener("click", async () => {
   const email = document.getElementById("emailAuth").value.trim();
   const senha = document.getElementById("senhaAuth").value.trim();
 
   if (!email || !senha) {
-    alert("Preencha e-mail e senha!");
+    alert("Informe e-mail e senha!");
     return;
   }
 
@@ -53,33 +54,38 @@ document.getElementById("btnSignIn").addEventListener("click", async () => {
   if (error || !data) {
     alert("E-mail ou senha incorretos!");
   } else {
-    localStorage.setItem("usuarioLogado", JSON.stringify(data));
     alert("Login realizado com sucesso!");
+    localStorage.setItem("usuarioLogado", JSON.stringify(data));
     window.location.href = "comunidade.html";
   }
 });
 
-// ===== VERIFICAR LOGIN (para comunidade.html) =====
+// ===== VERIFICAR LOGIN NA COMUNIDADE =====
 function verificarLogin() {
   const usuario = localStorage.getItem("usuarioLogado");
-  if (!usuario) {
-    alert("Você precisa estar logado para acessar esta página!");
-    window.location.href = "index.html";
-  } else {
+  const areaPrivada = document.getElementById("areaPrivada");
+  const msgLogin = document.getElementById("msgLogin");
+  const nomeUsuario = document.getElementById("nomeUsuario");
+
+  if (usuario) {
     const user = JSON.parse(usuario);
-    document.getElementById("nomeUsuario").innerText = user.nome;
-    document.getElementById("areaPrivada").style.display = "block";
-    document.getElementById("msgLogin").style.display = "none";
+    nomeUsuario.textContent = user.nome;
+    areaPrivada.style.display = "block";
+    msgLogin.style.display = "none";
+  } else {
+    areaPrivada.style.display = "none";
+    msgLogin.style.display = "block";
   }
 }
 
 // ===== LOGOUT =====
-function logout() {
+document.getElementById("btnLogout")?.addEventListener("click", () => {
   localStorage.removeItem("usuarioLogado");
+  alert("Você saiu da conta!");
   window.location.href = "index.html";
-}
+});
 
-// ===== VERIFICAR SENHA ADMIN =====
+// ===== ÁREA ADMINISTRATIVA =====
 function verificarAdmin() {
   const senha = prompt("Digite a senha do desenvolvedor:");
   if (senha !== senhaAdmin) {
@@ -94,7 +100,6 @@ function verificarAdmin() {
 async function carregarUsuarios() {
   const { data, error } = await supabase.from("usuarios").select("*");
   if (error) {
-    console.error(error);
     alert("Erro ao carregar usuários!");
     return;
   }
@@ -102,19 +107,19 @@ async function carregarUsuarios() {
   const tabela = document.getElementById("tabelaUsuarios");
   tabela.innerHTML = "";
 
-  data.forEach((user) => {
-    const linha = document.createElement("tr");
-    linha.innerHTML = `
-      <td>${user.nome}</td>
-      <td>${user.email}</td>
-      <td>${user.telefone || "-"}</td>
-      <td>${user.endereco || "-"}</td>
+  data.forEach((u) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${u.nome}</td>
+      <td>${u.email}</td>
+      <td>${u.telefone || "-"}</td>
+      <td>${u.endereco || "-"}</td>
       <td>
-        <button class="btn btn-warning btn-sm" onclick="editarUsuario('${user.id}')">Editar</button>
-        <button class="btn btn-danger btn-sm" onclick="excluirUsuario('${user.id}')">Excluir</button>
+        <button class="btn btn-warning btn-sm" onclick="editarUsuario('${u.id}')">Editar</button>
+        <button class="btn btn-danger btn-sm" onclick="excluirUsuario('${u.id}')">Excluir</button>
       </td>
     `;
-    tabela.appendChild(linha);
+    tabela.appendChild(tr);
   });
 }
 
@@ -136,7 +141,7 @@ async function editarUsuario(id) {
 }
 
 async function excluirUsuario(id) {
-  if (!confirm("Tem certeza que deseja excluir este usuário?")) return;
+  if (!confirm("Deseja realmente excluir este usuário?")) return;
 
   const { error } = await supabase.from("usuarios").delete().eq("id", id);
   if (error) alert("Erro ao excluir!");
