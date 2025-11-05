@@ -3,39 +3,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Comunidade - Terraria Fan</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Comunidade - Terraria</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== ESTILO ESPECÍFICO DA GALERIA ===== */
+    .gallery-container {
+      background-color: #1b2a38;
+      padding: 40px 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .gallery-item {
+      background-color: #0d1b2a;
+      border: 2px solid #2b9348;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      overflow: hidden;
+      width: 300px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 15px rgba(43, 147, 72, 0.6);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-item p {
+      text-align: center;
+      margin: 10px 0;
+      color: #e0e1dd;
+      font-weight: bold;
+      background-color: #2b9348;
+      padding: 6px;
+      border-top: 1px solid #0d1b2a;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2b9348;
+      font-family: 'Courier New', Courier, monospace;
+      margin-bottom: 25px;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    #msgLogin {
+      text-align: center;
+      margin-top: 80px;
+      color: #ccc;
+      display: none;
+    }
+  </style>
 </head>
 <body onload="verificarLogin()">
+  <!-- ===== NAVBAR ===== -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-success">
     <div class="container">
       <a class="navbar-brand fw-bold" href="index.html">Terraria Fan</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="guia.html">Guias</a></li>
+          <li class="nav-item"><a class="nav-link" href="lojas.html">Lojas</a></li>
+          <li class="nav-item"><a class="nav-link active" href="comunidade.html">Comunidade</a></li>
+          <li class="nav-item"><a class="nav-link" href="manutencao.html">Manutenção</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
 
-  <main class="container py-5">
-    <h2>Comunidade</h2>
-    <p>Página restrita a usuários logados. Faça login antes de entrar.</p>
+  <!-- ===== MENSAGEM CASO NÃO ESTEJA LOGADO ===== -->
+  <div id="msgLogin">
+    <h3>⚠️ Você precisa estar logado para acessar a comunidade!</h3>
+    <a href="index.html" class="btn btn-success mt-3">Voltar ao Início</a>
+  </div>
 
-    <div id="areaPrivada" style="display:none;">
-      <h4>Bem-vindo, <span id="nomeUsuario"></span>!</h4>
-      <p>Aqui você pode postar dicas e opiniões.</p>
-      <form id="formPost">
-        <textarea id="txtPost" class="form-control mb-2" rows="3" placeholder="Escreva algo..."></textarea>
-        <button class="btn btn-success">Publicar</button>
-      </form>
-      <div id="posts" class="mt-3"></div>
-      <button id="btnLogout" class="btn btn-outline-danger mt-3">Sair</button>
-    </div>
+  <!-- ===== CONTEÚDO ===== -->
+  <main class="container mt-5" id="conteudoComunidade" style="display: none;">
+    <h2>Galeria da Comunidade Terraria</h2>
 
-    <div id="msgLogin" class="alert alert-warning" role="alert">
-      Você precisa entrar para acessar a comunidade.
+    <div class="gallery-container">
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="img/casagelo.png" alt="Construção do jogador Marcos">
+          <p>Casa no Gelo - Marcos</p>
+        </div>
+
+        <div class="gallery-item">
+          <img src="img/casarvore.png" alt="Construção da Ana">
+          <p>Casa na Árvore - Ana</p>
+        </div>
+
+        <div class="gallery-item">
+          <img src="img/espatorre.png" alt="Construção do João">
+          <p>Torre Espada - João</p>
+        </div>
+
+        <div class="gallery-item">
+          <img src="img/whitesnake.png" alt="Construção da Ollie">
+          <p>Cobra Branca - Ollie</p>
+        </div>
+      </div>
     </div>
   </main>
 
-  <footer class="text-center p-3 bg-success text-light">© 2025 Terraria Fan</footer>
+  <!-- ===== FOOTER ===== -->
+  <footer class="text-center p-3 bg-success text-light">© 2025 Terraria Fan - Rafael Torraca (16)99397-2820</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="app.js"></script>
+
+  <script>
+    async function verificarLogin() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        document.getElementById("msgLogin").style.display = "block";
+        document.getElementById("conteudoComunidade").style.display = "none";
+      } else {
+        document.getElementById("msgLogin").style.display = "none";
+        document.getElementById("conteudoComunidade").style.display = "block";
+      }
+    }
+  </script>
 </body>
 </html>

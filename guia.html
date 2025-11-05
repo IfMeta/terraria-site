@@ -3,31 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guias - Terraria Fan</title>
+  <title>Terraria Fan - Guias</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-success">
     <div class="container">
       <a class="navbar-brand fw-bold" href="index.html">Terraria Fan</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="guia.html">Guias</a></li>
+          <li class="nav-item"><a class="nav-link" href="lojas.html">Lojas</a></li>
+          <li class="nav-item"><a class="nav-link" href="comunidade.html">Comunidade</a></li>
+          <li class="nav-item"><a class="nav-link" href="manutencao.html">Manutenção</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
 
-  <main class="container py-5">
-    <h2>Guias de Terraria</h2>
-    <div class="row">
-      <div class="col-md-6">
-        <h4>Guia de Início</h4>
-        <p>Dicas para sobreviver nas primeiras noites, conseguir ferramentas e construir sua base.</p>
+  <!-- CONTEÚDO -->
+  <main class="container py-5 text-light">
+    <h1 class="text-center mb-4 text-success">Guias de Chefes</h1>
+
+    <div class="row gy-4">
+      <!-- Chefes -->
+      <div class="col-12 d-flex align-items-start bg-dark bg-opacity-50 p-3 rounded">
+        <img src="img/kingslime.gif" alt="King Slime" class="me-3 rounded" width="100">
+        <p><strong>King Slime:</strong> O King Slime é um slime azul gigante com 2.000  de vida. Ele é invocado com uma Coroa de Slime ou após matar 150 (75 se ele já tiver sido morto) slimes durante uma Chuva de Slime. 
+        Pode se teletransportar se o jogador estiver longe. No Modo Expert, invoca slimes espinhosos.</p>
       </div>
-      <div class="col-md-6">
-        <h4>Chefes</h4>
-        <p>Estratégias para derrotar os principais chefes (King Slime, Eye of Cthulhu, etc.).</p>
+
+      <div class="col-12 d-flex align-items-start bg-dark bg-opacity-50 p-3 rounded">
+        <img src="img/eyeofc.gif" alt="Olho de Cthulhu" class="me-3 rounded" width="100">
+        <p><strong>Olho de Cthulhu:</strong> O Olho de Cthulhu é um olho gigante com 2.800 de vida. Surge à noite se o jogador tiver 200+ de vida e 10+ de defesa, ou com o item Olho de Aparência Suspeita. No Modo Expert, realiza ataques rápidos em cadeia na segunda fase.</p>
+      </div>
+
+      <div class="col-12 d-flex align-items-start bg-dark bg-opacity-50 p-3 rounded">
+        <img src="img/brain.gif" alt="Cérebro de Cthulhu" class="me-3 rounded" width="100">
+        <p><strong>Cérebro de Cthulhu:</strong> Um cérebro voador invocado no Carmesim após quebrar três Corações Carmesins. Possui duas formas, sendo invulnerável na primeira. No Modo Expert cria ilusões de si mesmo, tornando-se mais difícil de identificar.</p>
+      </div>
+
+      <div class="col-12 d-flex align-items-start bg-dark bg-opacity-50 p-3 rounded">
+        <img src="img/queenbee.gif" alt="Abelha Rainha" class="me-3 rounded" width="100">
+        <p><strong>Abelha Rainha:</strong> Invocada ao destruir uma Larva nas Colmeias da Selva Subterrânea. Alterna entre ataques com ferrões e invocação de abelhas. No Modo Expert, investe mais rapidamente conforme perde vida.</p>
+      </div>
+
+      <div class="col-12 d-flex align-items-start bg-dark bg-opacity-50 p-3 rounded">
+        <img src="img/skeletron.gif" alt="Skeletron" class="me-3 rounded" width="100">
+        <p><strong>Skeletron:</strong> Invocado ao falar com o Velho na entrada da Masmorra à noite. Possui cabeça e duas mãos que atacam o jogador. No Modo Expert, dispara crânios teleguiados e suas mãos causam Lentidão.</p>
+      </div>
+
+      <div class="col-12 d-flex align-items-start bg-dark bg-opacity-50 p-3 rounded">
+        <img src="img/wof.gif" alt="Parede de Carne" class="me-3 rounded" width="100">
+        <p><strong>Parede de Carne:</strong> Invocada ao jogar o Boneco Vodu Guia na lava do Submundo. É o chefe final do pré-Hard Mode. Ao ser derrotada, ativa o Modo Difícil e dropa o Martelo de Destruição. No Modo Expert, se move muito mais rápido e invoca mais Famintas.</p>
       </div>
     </div>
   </main>
 
-  <footer class="text-center p-3 bg-success text-light">© 2025 Terraria Fan</footer>
+  <!-- RODAPÉ -->
+  <footer class="text-center p-3 bg-success text-light">© 2025 Terraria Fan - Rafael Torraca (16)99397-2820</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
