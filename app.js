@@ -4,7 +4,7 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ===== VARIÁVEIS =====
-const senhaAdmin = "admin123"; // senha para acessar manutenção
+const senhaAdmin = "admin123";
 
 // ===== CADASTRO =====
 document.getElementById("btnSignUp")?.addEventListener("click", async () => {
@@ -19,7 +19,6 @@ document.getElementById("btnSignUp")?.addEventListener("click", async () => {
     return;
   }
 
-  // Inserir no Supabase
   const { data, error } = await supabase
     .from("usuarios")
     .insert([{ nome, telefone, endereco, email, senha }])
@@ -60,20 +59,19 @@ document.getElementById("btnSignIn")?.addEventListener("click", async () => {
   }
 });
 
-// ===== VERIFICAR LOGIN NA COMUNIDADE =====
+// ===== VERIFICAR LOGIN PARA A COMUNIDADE =====
 function verificarLogin() {
   const usuario = localStorage.getItem("usuarioLogado");
-  const areaPrivada = document.getElementById("areaPrivada");
   const msgLogin = document.getElementById("msgLogin");
-  const nomeUsuario = document.getElementById("nomeUsuario");
+  const conteudo = document.getElementById("conteudoComunidade");
+
+  if (!msgLogin || !conteudo) return; // segurança
 
   if (usuario) {
-    const user = JSON.parse(usuario);
-    nomeUsuario.textContent = user.nome;
-    areaPrivada.style.display = "block";
     msgLogin.style.display = "none";
+    conteudo.style.display = "block";
   } else {
-    areaPrivada.style.display = "none";
+    conteudo.style.display = "none";
     msgLogin.style.display = "block";
   }
 }
@@ -143,7 +141,11 @@ async function editarUsuario(id) {
 async function excluirUsuario(id) {
   if (!confirm("Deseja realmente excluir este usuário?")) return;
 
-  const { error } = await supabase.from("usuarios").delete().eq("id", id);
+  const { error } = await supabase
+    .from("usuarios")
+    .delete()
+    .eq("id", id);
+
   if (error) alert("Erro ao excluir!");
   else {
     alert("Usuário excluído!");

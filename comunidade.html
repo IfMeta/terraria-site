@@ -70,6 +70,7 @@
     }
   </style>
 </head>
+
 <body onload="verificarLogin()">
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-success">
@@ -95,7 +96,7 @@
     <a href="index.html" class="btn btn-success mt-3">Voltar ao Início</a>
   </div>
 
-  <!-- ===== CONTEÚDO ===== -->
+  <!-- ===== CONTEÚDO DA COMUNIDADE ===== -->
   <main class="container mt-5" id="conteudoComunidade" style="display: none;">
     <h2>Galeria da Comunidade Terraria</h2>
 
@@ -131,17 +132,5 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="app.js"></script>
 
-  <script>
-    async function verificarLogin() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        document.getElementById("msgLogin").style.display = "block";
-        document.getElementById("conteudoComunidade").style.display = "none";
-      } else {
-        document.getElementById("msgLogin").style.display = "none";
-        document.getElementById("conteudoComunidade").style.display = "block";
-      }
-    }
-  </script>
 </body>
 </html>
